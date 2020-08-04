@@ -46,6 +46,6 @@ out/
 
 ### App ###
 !src/test/java/ru/netology/data/**
-./data
-!app-deadline.jar
-!**/initdb/**
+**/gate-simulator/data/**
+**/gate-simulator/pgdata/**
+!aqa-shop.jar
