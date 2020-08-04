@@ -1,9 +1,0 @@
-1. Контейнер Node.js https://github.com/netology-code/aqa-homeworks/tree/aqa4/docker
- - gate-simulator
- - npm start
-
-2. Контейнер MySQL https://github.com/pava-14/aqa3.2.1
-3. Контейнер PostgreSQL https://github.com/pava-14/aqa3.1.1
-4. Запуск aqa-shop.jar
-5. Список сценариев
-
