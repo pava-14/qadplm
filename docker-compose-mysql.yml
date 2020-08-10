@@ -22,15 +22,13 @@ services:
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
   gate:
-    build: .
+    build: ./gate-simulator
     image: gate-simulator:1.0
     ports:
       - '9999:9999'
     restart: on-failure
-    depends_on:
-      - mysql
   aqa-shop:
-#    build: .
+    build: ./aqa-shop.mysql
     image: aqa-shop-mysql:1.0
     ports:
       - '8080:8080'
