@@ -50,3 +50,4 @@ out/
 **/gate-simulator/pgdata/**
 !aqa-shop.jar
 data/**
+pgdata/**
