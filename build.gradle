@@ -18,6 +18,7 @@ repositories {
 
 dependencies {
     testImplementation(group: 'junit', name: 'junit', version: '4.12')
+    testImplementation(group: 'com.codeborne', name: 'selenide', version: '5.14.0')
     testImplementation(group: 'org.postgresql', name: 'postgresql', version: '42.1.4')
     testImplementation(group: 'mysql', name: 'mysql-connector-java', version: '8.0.21')
     testImplementation(group: 'commons-dbutils', name: 'commons-dbutils', version: '1.7')
