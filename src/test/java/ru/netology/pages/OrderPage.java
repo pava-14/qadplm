@@ -2,11 +2,12 @@ package ru.netology.pages;
 
 public class OrderPage {
     private final String xptext = "//*[text()='%s']";
+    private final String headerCaption = "Путешествие дня";
     private final String orderButtonCaption = "Купить";
     private final String orderCreditButtonCaption = "Купить в кредит";
-    private final String orderContinueButtonCaption = "Купить в кредит";
+    private final String orderContinueButtonCaption = "Продолжить";
 
-    private SelenideElement orderButton = $(
+    //private SelenideElement orderButton = $(
     /*
 
     Купить
