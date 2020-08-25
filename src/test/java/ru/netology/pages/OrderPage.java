@@ -2,40 +2,47 @@ package ru.netology.pages;
 
 import com.codeborne.selenide.SelenideElement;
 
+import java.util.List;
+
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
-import static java.lang.String.format;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class OrderPage {
     private final String buttonOrderCaption = "Купить";
     private final String buttonCreditCaption = "Купить в кредит";
     private final String buttonContinueCaption = "Продолжить";
 
+    private final String successMessage = "Операция одобрена Банком.";
+    private final String errorMessage = "Ошибка! Банк отказал в проведении операции.";
+
     private SelenideElement buttonContinue = $(withText(buttonContinueCaption));
     private SelenideElement buttonCredit = $(withText(buttonCreditCaption));
-    private SelenideElement buttonOrder = $(withText(buttonContinueCaption));
+    private SelenideElement buttonOrder = $(byText(buttonContinueCaption));
 
-    //private SelenideElement orderButton = $(
+    private List<SelenideElement> formFields = $$(".input__control");
+    private SelenideElement fieldCardNumber = formFields.get(0);
+    private SelenideElement fieldMonth = formFields.get(1);
+    private SelenideElement fieldYear = formFields.get(2);
+    private SelenideElement fieldOwner = formFields.get(3);
+    private SelenideElement fieldCvcCvv = formFields.get(4);
+
+
     /*
-    By.xpath(String.format(xptext, linkTabletsText)
+    Успешно
+    Операция одобрена Банком.
+
+    Ошибка
+    Ошибка! Банк отказал в проведении операции.
      */
-//    @FindBy(xpath = "//*[text()='Компьютеры']")
+
+    //    @FindBy(xpath = "//*[text()='Компьютеры']")
 //    private WebElement linkComputers;
 //public DashboardPage() {
 //    heading.shouldBe(visible);
 //  }
 //   @FindBy(css = "[data-test-id=login] input")
 //  private SelenideElement loginField;
-//    Купить
-//    Купить в кредит
-/*
-    $$('.input__control')[0] - Card number
-    $$('.input__control')[1] - Month
-    $$('.input__control')[2] - Year
-    $$('.input__control')[3] - Owner
-    $$('.input__control')[4] - CVC/CVV
-    ('.form-field button') - Продолжить
-     */
-
 
 }
