@@ -39,8 +39,12 @@ public class OrderFormTest {
 
     @Test
     public void shouldOpenOrderPage() {
-//        OrderPage orderPage = startPage.openOrderPage();
-//        assertNotNull(orderPage);
         assertNotNull(startPage.openOrderPage());
+    }
+
+    @Test
+    public void shouldApprovedCreditByCard () {
+        OrderPage orderPage = startPage.openOrderPage();
+
     }
 }
