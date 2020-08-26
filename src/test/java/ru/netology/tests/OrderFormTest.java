@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.netology.data.CardGenerator;
 import ru.netology.pages.OrderPage;
 import ru.netology.pages.StartPage;
 
@@ -39,12 +40,39 @@ public class OrderFormTest {
 
     @Test
     public void shouldOpenOrderPage() {
-        assertNotNull(startPage.openOrderPage());
+        assertNotNull(startPage);
     }
 
     @Test
-    public void shouldApprovedCreditByCard () {
-        OrderPage orderPage = startPage.openOrderPage();
-
+    public void shouldApprovedCreditByCard() {
+        OrderPage orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
+        orderPage.sendData();
+        orderPage.waitApproved();
     }
+
+    @Test
+    public void shouldApprovedOrderByCard() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
+        orderPage.sendData();
+        orderPage.waitApproved();
+    }
+
+    @Test
+    public void shouldDeclinedCreditByDeclinedCard() {
+        OrderPage orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
+        orderPage.sendData();
+        orderPage.waitDeclined();
+    }
+
+    @Test
+    public void shouldDeclinedOrderByDeclinedCard() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
+        orderPage.sendData();
+        orderPage.waitDeclined();
+    }
+
 }

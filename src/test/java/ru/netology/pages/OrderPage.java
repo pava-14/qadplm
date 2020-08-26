@@ -1,48 +1,43 @@
 package ru.netology.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import ru.netology.data.Card;
 
-import java.util.List;
-
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class OrderPage {
-    private final String buttonOrderCaption = "Купить";
-    private final String buttonCreditCaption = "Купить в кредит";
     private final String buttonContinueCaption = "Продолжить";
+    private final String approvedMessage = "Операция одобрена Банком.";
+    private final String declinedMessage = "Ошибка! Банк отказал в проведении операции.";
+    private final String fieldSelector = ".input__control";
 
-    private final String successMessage = "Операция одобрена Банком.";
-    private final String errorMessage = "Ошибка! Банк отказал в проведении операции.";
+    private final SelenideElement fieldCardNumber = $$(fieldSelector).get(0);
+    private final SelenideElement fieldMonth = $$(fieldSelector).get(1);
+    private final SelenideElement fieldYear = $$(fieldSelector).get(2);
+    private final SelenideElement fieldOwner = $$(fieldSelector).get(3);
+    private final SelenideElement fieldCvcCvv = $$(fieldSelector).get(4);
 
-    private SelenideElement buttonContinue = $(withText(buttonContinueCaption));
-    private SelenideElement buttonCredit = $(withText(buttonCreditCaption));
-    private SelenideElement buttonOrder = $(byText(buttonContinueCaption));
+    public void setCardFields(Card card) {
+        fieldCardNumber.setValue(card.getCardNumber());
+        fieldMonth.setValue(card.getCardMonth());
+        fieldYear.setValue(card.getCardYear());
+        fieldOwner.setValue(card.getCardOwner());
+        fieldCvcCvv.setValue(card.getCardCvcCvv());
+    }
 
-    private List<SelenideElement> formFields = $$(".input__control");
-    private SelenideElement fieldCardNumber = formFields.get(0);
-    private SelenideElement fieldMonth = formFields.get(1);
-    private SelenideElement fieldYear = formFields.get(2);
-    private SelenideElement fieldOwner = formFields.get(3);
-    private SelenideElement fieldCvcCvv = formFields.get(4);
+    public void sendData() {
+        $(withText(buttonContinueCaption)).click();
+    }
 
+    public void waitApproved() {
+        $(withText(approvedMessage)).waitUntil(visible, 15000);
+    }
 
-    /*
-    Успешно
-    Операция одобрена Банком.
-
-    Ошибка
-    Ошибка! Банк отказал в проведении операции.
-     */
-
-    //    @FindBy(xpath = "//*[text()='Компьютеры']")
-//    private WebElement linkComputers;
-//public DashboardPage() {
-//    heading.shouldBe(visible);
-//  }
-//   @FindBy(css = "[data-test-id=login] input")
-//  private SelenideElement loginField;
-
+    public void waitDeclined() {
+        $(withText(declinedMessage)).waitUntil(visible, 15000);
+    }
 }
