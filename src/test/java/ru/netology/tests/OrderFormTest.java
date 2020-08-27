@@ -48,7 +48,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
-        orderPage.waitApproved();
+        orderPage.waitForApproved();
     }
 
     @Test
@@ -56,7 +56,7 @@ public class OrderFormTest {
         orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
-        orderPage.waitApproved();
+        orderPage.waitForApproved();
     }
 
     @Test
@@ -64,7 +64,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-        orderPage.waitDeclined();
+        orderPage.waitForDeclined();
     }
 
     @Test
@@ -72,7 +72,133 @@ public class OrderFormTest {
         orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-        orderPage.waitDeclined();
+        orderPage.waitForDeclined();
+    }
+
+    @Test
+    public void shouldDeclinedCreditByUnknownCard() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithUnknownCardNumber());
+        orderPage.sendData();
+        orderPage.waitForDeclined();
+    }
+
+    @Test
+    public void shouldDeclinedOrderByUnknownCard() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithUnknownCardNumber());
+        orderPage.sendData();
+        orderPage.waitForDeclined();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithTooSmallYear() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallYear());
+        orderPage.sendData();
+        orderPage.waitForSmallMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithTooBigYear() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigYear());
+        orderPage.sendData();
+        orderPage.waitForBigMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithTooSmallYear() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallYear());
+        orderPage.sendData();
+        orderPage.waitForSmallMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithTooBigYear() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigYear());
+        orderPage.sendData();
+        orderPage.waitForBigMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithTooSmallMonth() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallMonth());
+        orderPage.sendData();
+        orderPage.waitForSmallMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithTooBigMonth() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigMonth());
+        orderPage.sendData();
+        orderPage.waitForBigMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithTooSmallMonth() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallMonth());
+        orderPage.sendData();
+        orderPage.waitForSmallMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithTooBigMonth() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigMonth());
+        orderPage.sendData();
+        orderPage.waitForBigMonthYearError();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithEmtyFields() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.sendData();
+        orderPage.waitForEmptyAllFieldsErrors();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithEmptyFields() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.sendData();
+        orderPage.waitForEmptyAllFieldsErrors();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithIncorrectNumberAndCvc() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectCardNumberAndCvc());
+        orderPage.sendData();
+        orderPage.waitForIncorrectNumberAndCvcErrors();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithIncorrectNumberAndCvc() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectCardNumberAndCvc());
+        orderPage.sendData();
+        orderPage.waitForIncorrectNumberAndCvcErrors();
+    }
+
+    @Test
+    public void shouldNotSendCreditByCardWithIncorrectOwner() {
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectOwnerByCyrillic());
+        orderPage.sendData();
+        orderPage.waitForIncorrectFormat();
+    }
+
+    @Test
+    public void shouldNotSendOrderByCardWithIncorrectOwner() {
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectOwnerByCyrillic());
+        orderPage.sendData();
+        orderPage.waitForIncorrectFormat();
     }
 
 }
