@@ -40,25 +40,50 @@ order_entity;
 +------------+--------------+------+-----+---------+-------+
  */
 public class DbHelper {
-    private final static String url = "jdbc:mysql://localhost:3306/app";
+    private final static String urlMysql = "jdbc:mysql://localhost:3306/app";
+    private final static String urlPostgres = "jdbc:postgresql://host.docker.internal:5432/app";
     private final static String user = "app";
     private final static String password = "pass";
 
-    /*
-    "TRUNCATE TABLE credit_request_entity;
-    TRUNCATE TABLE payment_entity;
-    TRUNCATE TABLE order_entity;"
-     */
-    public static void clearTable() {
-        val deleteAuthCodeSQL = " DELETE FROM auth_codes;";
+    public static void clearTable(boolean usePostgres) {
+        String url = (usePostgres) ? urlPostgres: urlMysql;
+        val truncateOrderSQL = "TRUNCATE TABLE order_entity;";
+        val truncatePaymentSQL = "TRUNCATE TABLE payment_entity;";
+        val truncateCrefitSQL = "TRUNCATE TABLE credit_request_entity;";
         val runner = new QueryRunner();
         try {
             try (val conn = DriverManager.getConnection(url, user, password)) {
-                runner.execute(conn, deleteAuthCodeSQL, new ScalarHandler<>());
+                runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
+                runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
+                runner.execute(conn, truncateCrefitSQL, new ScalarHandler<>());
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    /*
+    Таблица payment_entity содержит строку операции оплаты,
+    в поле amount значение 4500000, в поле status значение APPROVED.
+    Таблица order_entity содержит строку операции покупки.
+    Поля transaction_id и payment_id содержат одинаковые значения.
+    */
+    public static void getOrderPaymentInfo (int amount, String status, boolean usePostgres) {
+        String url = (usePostgres) ? urlPostgres: urlMysql;
+
+        val codeSQL = "SELECT payment_entity.status "
+        + "FROM payment_entity INNER JOIN transaction_id ON payment_entity.transaction_id "
+                + "= order_entity.payment_id WHERE payment_entity.amount = ? AND payment_entity.status = ?";
+        val runner = new QueryRunner();
+        String code = "";
+        try {
+            try (val conn = DriverManager.getConnection(url, user, password)) {
+                code = runner.query(conn, codeSQL, new ScalarHandler<>(), amount, status);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return new VerificationCode(code);
     }
 
 }

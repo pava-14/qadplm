@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.CardGenerator;
+import ru.netology.data.DbHelper;
 import ru.netology.pages.OrderPage;
 import ru.netology.pages.StartPage;
 
@@ -200,5 +201,16 @@ public class OrderFormTest {
         orderPage.sendData();
         orderPage.waitForIncorrectFormat();
     }
+
+    @Test
+    public void shouldStoredApprovedOrderByCardIntoMySqlDatabase() {
+        DbHelper.clearTable(false);
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
+        orderPage.sendData();
+        orderPage.waitForApproved();
+
+    }
+
 
 }
