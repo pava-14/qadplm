@@ -12,9 +12,13 @@ import ru.netology.pages.OrderPage;
 import ru.netology.pages.StartPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OrderFormTest {
+    private int amount = 4500000;
+    private String approvedStatus = "APPROVED";
+    private String declinedStatus = "DECLINED";
     private final String startPageUrl = "http://localhost:8080";
     private StartPage startPage;
     private OrderPage orderPage;
@@ -209,7 +213,19 @@ public class OrderFormTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
+        String actualStatus = DbHelper.getOrderInfo(false, false);
+        assertEquals(approvedStatus, actualStatus);
+    }
 
+    @Test
+    public void shouldStoredApprovedCreditByCardIntoMySqlDatabase() {
+        DbHelper.clearTable(false);
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
+        orderPage.sendData();
+        orderPage.waitForApproved();
+        String actualStatus = DbHelper.getOrderInfo(true, false);
+        assertEquals(approvedStatus, actualStatus);
     }
 
 

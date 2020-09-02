@@ -46,7 +46,7 @@ public class DbHelper {
     private final static String password = "pass";
 
     public static void clearTable(boolean usePostgres) {
-        String url = (usePostgres) ? urlPostgres: urlMysql;
+        String url = (usePostgres) ? urlPostgres : urlMysql;
         val truncateOrderSQL = "TRUNCATE TABLE order_entity;";
         val truncatePaymentSQL = "TRUNCATE TABLE payment_entity;";
         val truncateCrefitSQL = "TRUNCATE TABLE credit_request_entity;";
@@ -62,28 +62,26 @@ public class DbHelper {
         }
     }
 
-    /*
-    Таблица payment_entity содержит строку операции оплаты,
-    в поле amount значение 4500000, в поле status значение APPROVED.
-    Таблица order_entity содержит строку операции покупки.
-    Поля transaction_id и payment_id содержат одинаковые значения.
-    */
-    public static void getOrderPaymentInfo (int amount, String status, boolean usePostgres) {
-        String url = (usePostgres) ? urlPostgres: urlMysql;
-
-        val codeSQL = "SELECT payment_entity.status "
-        + "FROM payment_entity INNER JOIN transaction_id ON payment_entity.transaction_id "
-                + "= order_entity.payment_id WHERE payment_entity.amount = ? AND payment_entity.status = ?";
+    public static String getOrderInfo(boolean credit, boolean usePostgres) {
+        String url = (usePostgres) ? urlPostgres : urlMysql;
+        val statusSQL = (credit) ?
+                "SELECT credit_request_entity.status"
+                        + " FROM credit_request_entity INNER JOIN order_entity"
+                        + " ON credit_request_entity.bank_id = order_entity.payment_id;" :
+                "SELECT payment_entity.status "
+                        + "FROM payment_entity INNER JOIN order_entity "
+                        + "ON payment_entity.transaction_id"
+                        + " = order_entity.payment_id"
+                        + " WHERE payment_entity.amount = 4500000;";
         val runner = new QueryRunner();
-        String code = "";
+        String result = "";
         try {
             try (val conn = DriverManager.getConnection(url, user, password)) {
-                code = runner.query(conn, codeSQL, new ScalarHandler<>(), amount, status);
+                result = runner.query(conn, statusSQL, new ScalarHandler<>());
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return new VerificationCode(code);
+        return result;
     }
-
 }
