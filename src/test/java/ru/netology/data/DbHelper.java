@@ -62,17 +62,19 @@ public class DbHelper {
         }
     }
 
+    //TODO: SQL ...
     public static String getOrderInfo(boolean credit, boolean usePostgres) {
         String url = (usePostgres) ? urlPostgres : urlMysql;
         val statusSQL = (credit) ?
-                "SELECT credit_request_entity.status"
-                        + " FROM credit_request_entity INNER JOIN order_entity"
-                        + " ON credit_request_entity.bank_id = order_entity.payment_id;" :
+                "SELECT credit_request_entity.status "
+                        + "FROM credit_request_entity "
+                        + "INNER JOIN order_entity "
+                        + "ON credit_request_entity.id = order_entity.payment_id;" :
                 "SELECT payment_entity.status "
-                        + "FROM payment_entity INNER JOIN order_entity "
-                        + "ON payment_entity.transaction_id"
-                        + " = order_entity.payment_id"
-                        + " WHERE payment_entity.amount = 4500000;";
+                        + "FROM payment_entity "
+                        + "INNER JOIN order_entity "
+                        + "ON payment_entity.id  = order_entity.payment_id "
+                        + "WHERE payment_entity.amount = 4500000;";
         val runner = new QueryRunner();
         String result = "";
         try {

@@ -28,9 +28,11 @@ order_entity;
 | credit_id  | varchar(255) | YES  |     | NULL    |       |
 | payment_id | varchar(255) | YES  |     | NULL    |       |
 +------------+--------------+------+-----+---------+-------+
+
 Order APPROVED
 SELECT payment_entity.status FROM payment_entity INNER JOIN order_entity ON payment_entity.transaction_id = order_entity.payment_id;
-// WHERE payment_entity.amount = 4500000 AND payment_entity.status = "APPROVED";
+WHERE payment_entity.amount = 4500000
+// AND payment_entity.status = "APPROVED";
 
 Credit APPROVED
 
