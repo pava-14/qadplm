@@ -63,23 +63,23 @@ public class DbHelper {
     }
 
     //TODO: SQL ...
-    public static String getOrderInfo(boolean credit, boolean usePostgres) {
+    public static String getOrderInfo(int amount, boolean credit, boolean usePostgres) {
         String url = (usePostgres) ? urlPostgres : urlMysql;
         val statusSQL = (credit) ?
                 "SELECT credit_request_entity.status "
                         + "FROM credit_request_entity "
                         + "INNER JOIN order_entity "
                         + "ON credit_request_entity.id = order_entity.payment_id;" :
-                "SELECT payment_entity.status "
-                        + "FROM payment_entity "
-                        + "INNER JOIN order_entity "
-                        + "ON payment_entity.id  = order_entity.payment_id "
-                        + "WHERE payment_entity.amount = 4500000;";
+                "SELECT true_payment_entity.status "
+                        + "FROM true_payment_entity "
+                        + "INNER JOIN true_order_entity "
+                        + "ON true_order_entity.payment_id = true_payment_entity.id "
+                        + "WHERE true_payment_entity.amount = ?;";
         val runner = new QueryRunner();
         String result = "";
         try {
             try (val conn = DriverManager.getConnection(url, user, password)) {
-                result = runner.query(conn, statusSQL, new ScalarHandler<>());
+                result = runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

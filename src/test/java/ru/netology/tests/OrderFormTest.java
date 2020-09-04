@@ -213,7 +213,7 @@ public class OrderFormTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
-        String actualStatus = DbHelper.getOrderInfo(false, false);
+        String actualStatus = DbHelper.getOrderInfo(amount,false, false);
         assertEquals(approvedStatus, actualStatus);
     }
 
@@ -224,7 +224,7 @@ public class OrderFormTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
-        String actualStatus = DbHelper.getOrderInfo(true, false);
+        String actualStatus = DbHelper.getOrderInfo(amount,true, false);
         assertEquals(approvedStatus, actualStatus);
     }
 
