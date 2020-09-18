@@ -46,10 +46,20 @@ Credit APPROVED
 SELECT credit_request_entity.status FROM credit_request_entity INNER JOIN order_entity ON credit_request_entity.bank_id = order_entity.payment_id;
 // WHERE credit_request_entity.status = "APPROVED";
 
+TRUE:
+SELECT payment_entity.status FROM payment_entity 
+INNER JOIN order_entity 
+ON payment_entity.id = order_entity.payment_id
+INNER JOIN credit_request_entity
+ON order_entity.credit_id = credit_request_entity.id
+WHERE payment_entity.amount = 4500000
+
+
 ///
 mysql> create table if not exists true_order_entity like order_entity;
 
 mysql> insert into true_order_entity select * from order_entity;
+mysql> UPDATE true_order_entity set payment_id = 'ba2da843-e2fe-4b47-80c8-34a96928ca88';
 
 mysql> create table if not exists true_payment_entity like payment_entity;
 

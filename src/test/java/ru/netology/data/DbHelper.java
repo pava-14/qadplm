@@ -66,15 +66,30 @@ public class DbHelper {
     public static String getOrderInfo(int amount, boolean credit, boolean usePostgres) {
         String url = (usePostgres) ? urlPostgres : urlMysql;
         val statusSQL = (credit) ?
-                "SELECT credit_request_entity.status "
-                        + "FROM credit_request_entity "
-                        + "INNER JOIN order_entity "
-                        + "ON credit_request_entity.id = order_entity.payment_id;" :
+                "SELECT true_payment_entity.status "
+                        + "FROM true_payment_entity "
+                        + "INNER JOIN true_order_entity "
+                        + "ON true_payment_entity.id = true_order_entity.payment_id "
+                        + "INNER JOIN true_credit_request_entity "
+                        + "ON true_order_entity.credit_id = true_credit_request_entity.id "
+                        + "WHERE true_payment_entity.amount = ?;" :
+//                "SELECT payment_entity.status "
+//                        + "FROM payment_entity "
+//                        + "INNER JOIN order_entity "
+//                        + "ON payment_entity.id = order_entity.payment_id "
+//                        + "INNER JOIN credit_request_entity "
+//                        + "ON order_entity.credit_id = credit_request_entity.id "
+//                        + "WHERE payment_entity.amount = ?;" :
                 "SELECT true_payment_entity.status "
                         + "FROM true_payment_entity "
                         + "INNER JOIN true_order_entity "
                         + "ON true_order_entity.payment_id = true_payment_entity.id "
                         + "WHERE true_payment_entity.amount = ?;";
+//                "SELECT payment_entity.status "
+//                        + "FROM payment_entity "
+//                        + "INNER JOIN order_entity "
+//                        + "ON order_entity.payment_id = payment_entity.id "
+//                        + "WHERE payment_entity.amount = ?;";
         val runner = new QueryRunner();
         String result = "";
         try {

@@ -385,8 +385,8 @@
   - в поле payment_entity.amount значение 4500000, 
   - в поле payment_entity.status значение APPROVED. 
 
-#####################  
-24. После отклоненной заявки "Купить", данные о заявке со статусом DECLINED сохраняются в базе данных PostgreSQL.
+  
+**24. После отклоненной заявки "Купить", данные о заявке со статусом DECLINED сохраняются в базе данных PostgreSQL.**
 
   *Шаги:*
 
@@ -416,6 +416,7 @@
 Таблица order_entity содержит строку операции покупки, 
   - значение order_entity.payment_id эквивалентно payment_entity.id.
   
+ #####################
  25. После отклоненной заявки "Купить в кредит", данные о завке со статусом DECLINED сохраняются в базе данных PostgreSQL.
 
   *Шаги:*
@@ -443,7 +444,7 @@
   - в поле credit_request_entity.status значение DECLINED.	 
 Таблица payment_entity содержит строку операции оплаты, 
   - в поле payment_entity.amount значение 4500000, 
-  - в поле payment_entity.status значение APPROVED. 
+  - в поле payment_entity.status значение DECLINED. 
 Таблица order_entity содержит строку операции покупки. 
   - значение order_entity.payment_id эквивалентно payment_entity.id.
   - значение order_entity.credit_id эквивалентно credit_request_entity.id

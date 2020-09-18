@@ -207,26 +207,49 @@ public class OrderFormTest {
     }
 
     @Test
-    public void shouldStoredApprovedOrderByCardIntoMySqlDatabase() {
+    public void shouldStoreApprovedOrderByCardIntoMySqlDatabase() {
         DbHelper.clearTable(false);
         orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
-        String actualStatus = DbHelper.getOrderInfo(amount,false, false);
+        String actualStatus = DbHelper.getOrderInfo(amount, false, false);
         assertEquals(approvedStatus, actualStatus);
     }
 
     @Test
-    public void shouldStoredApprovedCreditByCardIntoMySqlDatabase() {
+    public void shouldStoreApprovedCreditByCardIntoMySqlDatabase() {
         DbHelper.clearTable(false);
         orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
-        String actualStatus = DbHelper.getOrderInfo(amount,true, false);
+        String actualStatus = DbHelper.getOrderInfo(amount, true, false);
         assertEquals(approvedStatus, actualStatus);
     }
 
+    @Test
+    public void shouldStoreDeclinedOrderByCardIntoMySqlDatabase() {
+//        DbHelper.clearTable(false);
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
+        orderPage.sendData();
+//        orderPage.waitForDeclined();
+        orderPage.waitForApproved();
+        String actualStatus = DbHelper.getOrderInfo(amount, false, false);
+        assertEquals(declinedStatus, actualStatus);
+    }
+
+    @Test
+    public void shouldStoreDeclinedCreditByCardIntoMySqlDatabase() {
+//        DbHelper.clearTable(false);
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
+        orderPage.sendData();
+//        orderPage.waitForDeclined();
+        orderPage.waitForApproved();
+        String actualStatus = DbHelper.getOrderInfo(amount, true, false);
+        assertEquals(declinedStatus, actualStatus);
+    }
 
 }
