@@ -54,6 +54,9 @@ INNER JOIN credit_request_entity
 ON order_entity.credit_id = credit_request_entity.id
 WHERE payment_entity.amount = 4500000
 
+TEST:
+SELECT true_payment_entity.status FROM true_payment_entity INNER JOIN true_order_entity ON true_payment_entity.id = true_order_entity.payment_id INNER JOIN true_credit_request_entity ON true_order_entity.credit_id = true_credit_request_entity.id WHERE true_payment_entity.amount = 4500000
+
 
 ///
 mysql> create table if not exists true_order_entity like order_entity;
@@ -66,6 +69,10 @@ mysql> create table if not exists true_payment_entity like payment_entity;
 mysql> insert into true_payment_entity select * from payment_entity;
 
 
+pg> CREATE TABLE true_order_entity AS SELECT * FROM order_entity;
+pg> CREATE TABLE true_payment_entity AS SELECT * FROM payment_entity;
+pg> update true_order_entity set payment_id = 'cbc7953d-18c9-423c-8eb9-514f1dd08dc3';
+///
 
 mysql> create table if not exists true_credit_request_entity like credit_request_entity;
 Query OK, 0 rows affected (0.51 sec)

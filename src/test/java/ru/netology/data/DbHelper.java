@@ -63,8 +63,8 @@ public class DbHelper {
     }
 
     //TODO: SQL ...
-    public static String getOrderInfo(int amount, boolean credit, boolean usePostgres) {
-        String url = (usePostgres) ? urlPostgres : urlMysql;
+    public static String getOrderInfo(int amount, boolean credit, boolean usePgDb) {
+        String url = (usePgDb) ? urlPostgres : urlMysql;
         val statusSQL = (credit) ?
                 "SELECT true_payment_entity.status "
                         + "FROM true_payment_entity "
