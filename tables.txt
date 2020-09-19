@@ -30,21 +30,18 @@ order_entity;
 +------------+--------------+------+-----+---------+-------+
 
 Order APPROVED
-SELECT payment_entity.status FROM payment_entity INNER JOIN order_entity ON payment_entity.transaction_id = order_entity.payment_id;
+SELECT payment_entity.status FROM payment_entity INNER JOIN order_entity ON payment_entity.transaction_id = order_entity.payment_id
 WHERE payment_entity.amount = 4500000
-// AND payment_entity.status = "APPROVED";
 
 TRUE:
-SELECT payment_entity.status FROM payment_entity INNER JOIN order_entity ON payment_entity.id = order_entity.payment_id;
+SELECT payment_entity.status FROM payment_entity INNER JOIN order_entity ON payment_entity.id = order_entity.payment_id
 WHERE payment_entity.amount = 4500000
 
 SELECT status FROM true_payment_entity INNER JOIN true_order_entity ON true_order_entity.payment_id = true_payment_entity.id 
 WHERE true_payment_entity.amount = 4500000;
 
 Credit APPROVED
-
 SELECT credit_request_entity.status FROM credit_request_entity INNER JOIN order_entity ON credit_request_entity.bank_id = order_entity.payment_id;
-// WHERE credit_request_entity.status = "APPROVED";
 
 TRUE:
 SELECT payment_entity.status FROM payment_entity 
@@ -58,22 +55,15 @@ TEST:
 SELECT true_payment_entity.status FROM true_payment_entity INNER JOIN true_order_entity ON true_payment_entity.id = true_order_entity.payment_id INNER JOIN true_credit_request_entity ON true_order_entity.credit_id = true_credit_request_entity.id WHERE true_payment_entity.amount = 4500000
 
 
-///
-mysql> create table if not exists true_order_entity like order_entity;
+//mysql 
+create table if not exists true_order_entity like order_entity;
+insert into true_order_entity select * from order_entity;
+UPDATE true_order_entity set payment_id = 'ba2da843-e2fe-4b47-80c8-34a96928ca88';
+create table if not exists true_payment_entity like payment_entity;
+insert into true_payment_entity select * from payment_entity;
 
-mysql> insert into true_order_entity select * from order_entity;
-mysql> UPDATE true_order_entity set payment_id = 'ba2da843-e2fe-4b47-80c8-34a96928ca88';
-
-mysql> create table if not exists true_payment_entity like payment_entity;
-
-mysql> insert into true_payment_entity select * from payment_entity;
-
-
-pg> CREATE TABLE true_order_entity AS SELECT * FROM order_entity;
-pg> CREATE TABLE true_payment_entity AS SELECT * FROM payment_entity;
-pg> update true_order_entity set payment_id = 'cbc7953d-18c9-423c-8eb9-514f1dd08dc3';
-///
-
-mysql> create table if not exists true_credit_request_entity like credit_request_entity;
-Query OK, 0 rows affected (0.51 sec)
-
+//PostgreSQL 
+CREATE TABLE true_order_entity AS SELECT * FROM order_entity;
+CREATE TABLE true_payment_entity AS SELECT * FROM payment_entity;
+update true_order_entity set payment_id = 'cbc7953d-18c9-423c-8eb9-514f1dd08dc3';
+create table if not exists true_credit_request_entity like credit_request_entity;
