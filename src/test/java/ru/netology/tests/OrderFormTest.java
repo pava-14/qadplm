@@ -274,4 +274,28 @@ public class OrderFormTest {
         assertEquals(approvedStatus, actualStatus);
     }
 
+    @Test
+    public void shouldStoreDeclinedOrderByCardIntoMyPgDatabase() {
+//        DbHelper.clearTable(true);
+        orderPage = startPage.selectOrderByCard();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
+        orderPage.sendData();
+//        orderPage.waitForDeclined();
+        orderPage.waitForApproved();
+        String actualStatus = DbHelper.getOrderInfo(amount, false, true);
+        assertEquals(declinedStatus, actualStatus);
+    }
+
+    @Test
+    public void shouldStoreDeclinedCreditByCardIntoMyPgDatabase() {
+//        DbHelper.clearTable(true);
+        orderPage = startPage.selectOrderByCredit();
+        orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
+        orderPage.sendData();
+//        orderPage.waitForDeclined();
+        orderPage.waitForApproved();
+        String actualStatus = DbHelper.getOrderInfo(amount, true, true);
+        assertEquals(declinedStatus, actualStatus);
+    }
+
 }
