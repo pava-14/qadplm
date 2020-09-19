@@ -7,38 +7,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/*
-credit_request_entity;
-+---------+--------------+------+-----+---------+-------+
-| Field   | Type         | Null | Key | Default | Extra |
-+---------+--------------+------+-----+---------+-------+
-| id      | varchar(255) | NO   | PRI | NULL    |       |
-| bank_id | varchar(255) | YES  | UNI | NULL    |       |
-| created | datetime(6)  | YES  |     | NULL    |       |
-| status  | varchar(255) | YES  |     | NULL    |       |
-+---------+--------------+------+-----+---------+-------+
-
-payment_entity;
-+----------------+--------------+------+-----+---------+-------+
-| Field          | Type         | Null | Key | Default | Extra |
-+----------------+--------------+------+-----+---------+-------+
-| id             | varchar(255) | NO   | PRI | NULL    |       |
-| amount         | int(11)      | NO   |     | NULL    |       |
-| created        | datetime(6)  | YES  |     | NULL    |       |
-| status         | varchar(255) | YES  |     | NULL    |       |
-| transaction_id | varchar(255) | YES  | UNI | NULL    |       |
-+----------------+--------------+------+-----+---------+-------+
-
-order_entity;
-+------------+--------------+------+-----+---------+-------+
-| Field      | Type         | Null | Key | Default | Extra |
-+------------+--------------+------+-----+---------+-------+
-| id         | varchar(255) | NO   | PRI | NULL    |       |
-| created    | datetime(6)  | YES  |     | NULL    |       |
-| credit_id  | varchar(255) | YES  |     | NULL    |       |
-| payment_id | varchar(255) | YES  |     | NULL    |       |
-+------------+--------------+------+-----+---------+-------+
- */
 public class DbHelper {
     private final static String urlMysql = "jdbc:mysql://localhost:3306/app";
     private final static String urlPostgres = "jdbc:postgresql://host.docker.internal:5432/app";
@@ -62,34 +30,21 @@ public class DbHelper {
         }
     }
 
-    //TODO: SQL ...
     public static String getOrderInfo(int amount, boolean credit, boolean usePgDb) {
         String url = (usePgDb) ? urlPostgres : urlMysql;
         val statusSQL = (credit) ?
-                "SELECT true_payment_entity.status "
-                        + "FROM true_payment_entity "
-                        + "INNER JOIN true_order_entity "
-                        + "ON true_payment_entity.id = true_order_entity.payment_id "
-                        + "INNER JOIN true_credit_request_entity "
-                        + "ON true_order_entity.credit_id = true_credit_request_entity.id "
-                        + "WHERE true_payment_entity.amount = ?;" :
-//                "SELECT payment_entity.status "
-//                        + "FROM payment_entity "
-//                        + "INNER JOIN order_entity "
-//                        + "ON payment_entity.id = order_entity.payment_id "
-//                        + "INNER JOIN credit_request_entity "
-//                        + "ON order_entity.credit_id = credit_request_entity.id "
-//                        + "WHERE payment_entity.amount = ?;" :
-                "SELECT true_payment_entity.status "
-                        + "FROM true_payment_entity "
-                        + "INNER JOIN true_order_entity "
-                        + "ON true_order_entity.payment_id = true_payment_entity.id "
-                        + "WHERE true_payment_entity.amount = ?;";
-//                "SELECT payment_entity.status "
-//                        + "FROM payment_entity "
-//                        + "INNER JOIN order_entity "
-//                        + "ON order_entity.payment_id = payment_entity.id "
-//                        + "WHERE payment_entity.amount = ?;";
+                "SELECT payment_entity.status "
+                        + "FROM payment_entity "
+                        + "INNER JOIN order_entity "
+                        + "ON payment_entity.id = order_entity.payment_id "
+                        + "INNER JOIN credit_request_entity "
+                        + "ON order_entity.credit_id = credit_request_entity.id "
+                        + "WHERE payment_entity.amount = ?;" :
+                "SELECT payment_entity.status "
+                        + "FROM payment_entity "
+                        + "INNER JOIN order_entity "
+                        + "ON order_entity.payment_id = payment_entity.id "
+                        + "WHERE payment_entity.amount = ?;";
         val runner = new QueryRunner();
         String result = "";
         try {

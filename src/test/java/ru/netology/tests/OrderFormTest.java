@@ -230,31 +230,29 @@ public class OrderFormTest {
 
     @Test
     public void shouldStoreDeclinedOrderByCardIntoMySqlDatabase() {
-//        DbHelper.clearTable(false);
+        DbHelper.clearTable(false);
         orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-//        orderPage.waitForDeclined();
-        orderPage.waitForApproved();
+        orderPage.waitForDeclined();
         String actualStatus = DbHelper.getOrderInfo(amount, false, false);
         assertEquals(declinedStatus, actualStatus);
     }
 
     @Test
     public void shouldStoreDeclinedCreditByCardIntoMySqlDatabase() {
-//        DbHelper.clearTable(false);
+        DbHelper.clearTable(false);
         orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-//        orderPage.waitForDeclined();
-        orderPage.waitForApproved();
+        orderPage.waitForDeclined();
         String actualStatus = DbHelper.getOrderInfo(amount, true, false);
         assertEquals(declinedStatus, actualStatus);
     }
 
     @Test
     public void shouldStoreApprovedOrderByCardIntoMyPgDatabase() {
-//        DbHelper.clearTable(true);
+        DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
@@ -265,7 +263,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldStoreApprovedCreditByCardIntoPgDatabase() {
-//        DbHelper.clearTable(true);
+        DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
@@ -276,24 +274,22 @@ public class OrderFormTest {
 
     @Test
     public void shouldStoreDeclinedOrderByCardIntoMyPgDatabase() {
-//        DbHelper.clearTable(true);
+        DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-//        orderPage.waitForDeclined();
-        orderPage.waitForApproved();
+        orderPage.waitForDeclined();
         String actualStatus = DbHelper.getOrderInfo(amount, false, true);
         assertEquals(declinedStatus, actualStatus);
     }
 
     @Test
     public void shouldStoreDeclinedCreditByCardIntoMyPgDatabase() {
-//        DbHelper.clearTable(true);
+        DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-//        orderPage.waitForDeclined();
-        orderPage.waitForApproved();
+        orderPage.waitForDeclined();
         String actualStatus = DbHelper.getOrderInfo(amount, true, true);
         assertEquals(declinedStatus, actualStatus);
     }
