@@ -8,7 +8,7 @@
 заполняем валидными данными, отправляется заявка, но Поля "Номер карты", "CVC/CVV" - "Неверный формат", Владелец - "Поле обязательно для заполнения"
 -8. Форма отправляется с символами на кириллице в поле Владелец карты
 
-9. В order_entity.payment_id записывается payment_entity.transaction_id, а не payment_entity.id в БД MySQL
+-9. В order_entity.payment_id записывается payment_entity.transaction_id, а не payment_entity.id в БД MySQL
 
 10. В order_entity.payment_id записывается payment_entity.transaction_id, а не payment_entity.id в БД PostgreSQL
 
