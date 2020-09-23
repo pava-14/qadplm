@@ -349,7 +349,6 @@
 Таблица payment_entity содержит строку операции оплаты,
   - в поле payment_entity.amount значение 4500000, 
   - в поле payment_entity.status значение APPROVED. 
-
 Таблица order_entity содержит строку операции покупки, 
   - значение order_entity.payment_id эквивалентно payment_entity.id.
 
@@ -409,10 +408,9 @@
 
   *Ожидаемый результат:* 
   
-  Таблица payment_entity содержит строку операции оплаты,
+Таблица payment_entity содержит строку операции оплаты,
   - в поле payment_entity.amount значение 4500000, 
   - в поле payment_entity.status значение DECLINED. 
-
 Таблица order_entity содержит строку операции покупки, 
   - значение order_entity.payment_id эквивалентно payment_entity.id.
   
@@ -469,11 +467,11 @@
 	13. Проверить, что в таблицах появились данные об операции:
 	  - Выполнить select-postgres-table.cmd
 
-  *Ожидаемый результат:* 
-  Таблица payment_entity содержит строку операции оплаты,
+*Ожидаемый результат:* 
+
+Таблица payment_entity содержит строку операции оплаты,
   - в поле payment_entity.amount значение 4500000, 
   - в поле payment_entity.status значение APPROVED. 
-
 Таблица order_entity содержит строку операции покупки, 
   - значение order_entity.payment_id эквивалентно payment_entity.id.
 
@@ -498,8 +496,17 @@
 	13. Проверить, что в таблицах появились данные об операции:
 	  - Выполнить select-postgres-table.cmd
 
-  *Ожидаемый результат:* Таблица credit_request_entity содержит строку операции одобрения кредита, в поле status значение APPROVED. Таблица payment_entity содержит строку операции оплаты, в поле amount значение 4500000, в поле status значение APPROVED. Таблица order_entity содержит строку операции покупки. Поля transaction_id, bank_id и payment_id содержат одинаковые значения.
+*Ожидаемый результат:*
 
+Таблица payment_entity содержит строку операции оплаты,
+  - в поле payment_entity.amount значение 4500000, 
+  - в поле payment_entity.status значение APPROVED.
+Таблица order_entity содержит строку операции покупки, 
+  - значение order_entity.payment_id эквивалентно payment_entity.id.
+  - значение order_entity.credit_id эквивалентно credit_request_entity.id.
+Таблица credit_request_entity содержит строку операции одобрения кредита, 
+  - в поле status значение APPROVED. 
+  
 **28. После отклоненной заявки "Купить", данные о заявке со статусом DECLINED сохраняются в базе данных PostgreSQL.**
 
   *Шаги:*
@@ -521,12 +528,12 @@
 	13. Проверить, что в таблицах появились данные об операции:
 	  - Выполнить select-postgres-table.cmd
 
-  *Ожидаемый результат:* 
-   Таблица payment_entity содержит строку операции оплаты,
+*Ожидаемый результат:* 
+
+  Таблица payment_entity содержит строку операции оплаты,
   - в поле payment_entity.amount значение 4500000, 
   - в поле payment_entity.status значение DECLINED. 
-
-Таблица order_entity содержит строку операции покупки, 
+  Таблица order_entity содержит строку операции покупки, 
   - значение order_entity.payment_id эквивалентно payment_entity.id.
 
 **29. После отклоненной заявки "Купить в кредит", данные о завке со статусом DECLINED сохраняются в базе данных PostgreSQL.**
