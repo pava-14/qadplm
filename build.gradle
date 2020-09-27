@@ -9,13 +9,13 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 
-//allure {
-//    autoconfigure = true
-//    version = "2.13.5" // Allure Version
-//    useJUnit5 {
-//        version = "2.13.5" // Allure Version
-//    }
-//}
+allure {
+    autoconfigure = true
+    version = "2.13.5" // Allure Version
+    useJUnit5 {
+        version = "2.13.5" // Allure Version
+    }
+}
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
