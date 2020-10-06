@@ -10,7 +10,9 @@
 
 ```docker-compose -f docker-compose-postgres.yml up -d```
 
-## Просмотр данных в таблицах 
+## Работа с данными
+
+### Просмотр данных в таблицах 
 
 - Для MySQL:
 
@@ -20,7 +22,7 @@
 
 ```select-postgres-table.cmd```
 
-## Удаление всех данных из таблиц 
+### Удаление всех данных из таблиц 
 
 - Для MySQL:
 
@@ -30,3 +32,8 @@
 
 ```clear-postgres-table.cmd```
 
+## Отчетность
+
+[Отчётные документы по итогам тестирования](https://github.com/pava-14/qadplm/blob/master/Report.md)
+
+[Отчётные документы по итогам автоматизации](https://github.com/pava-14/qadplm/blob/master/Summary.md)
