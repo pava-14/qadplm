@@ -34,6 +34,6 @@
 
 ## Отчетность
 
-[Отчётные документы по итогам тестирования](https://github.com/pava-14/qadplm/blob/master/Report.md)
+[Отчёт по итогам тестирования](https://github.com/pava-14/qadplm/blob/master/Report.md)
 
-[Отчётные документы по итогам автоматизации](https://github.com/pava-14/qadplm/blob/master/Summary.md)
+[Отчёт по итогам автоматизации](https://github.com/pava-14/qadplm/blob/master/Summary.md)
