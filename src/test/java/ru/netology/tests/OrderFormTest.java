@@ -250,7 +250,7 @@ public class OrderFormTest {
         assertEquals(declinedStatus, actualStatus);
     }
 
-    @Test
+    //@Test
     public void shouldStoreApprovedOrderByCardIntoMyPgDatabase() {
         DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCard();
@@ -261,7 +261,7 @@ public class OrderFormTest {
         assertEquals(approvedStatus, actualStatus);
     }
 
-    @Test
+    //@Test
     public void shouldStoreApprovedCreditByCardIntoPgDatabase() {
         DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCredit();
@@ -272,7 +272,7 @@ public class OrderFormTest {
         assertEquals(approvedStatus, actualStatus);
     }
 
-    @Test
+    //@Test
     public void shouldStoreDeclinedOrderByCardIntoMyPgDatabase() {
         DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCard();
@@ -283,7 +283,7 @@ public class OrderFormTest {
         assertEquals(declinedStatus, actualStatus);
     }
 
-    @Test
+    //@Test
     public void shouldStoreDeclinedCreditByCardIntoMyPgDatabase() {
         DbHelper.clearTable(true);
         orderPage = startPage.selectOrderByCredit();
