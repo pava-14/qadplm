@@ -1,0 +1,20 @@
+#image: Ubuntu  # образ для сборки
+image: Visual Studio 2017
+
+stack: jdk 11  # версия JDK
+
+branches:
+  only:
+    - master  # ветка git
+
+build: off  # будем использовать свой скрипт сборки
+
+install:
+  - chmod +x ./gradlew
+  # запускаем SUT (& означает, что в фоновом режиме - не блокируем терминал для запуска тестов)
+  - choco install docker-compose
+  - docker-compose -f ./docker-compose-mysql.yml up -d
+
+build_script:
+  # запускаем тест, флаг --info позволяет выводить больше информации
+  - ./gradlew test -Dselenide.headless=true --info --tests --tests OrderFormTest --tests StoreDataIntoPgSqlTest
