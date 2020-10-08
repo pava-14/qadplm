@@ -5,11 +5,13 @@
 - Для MySQL:
 
 ```docker-compose -f docker-compose-mysql.yml up -d```
+
 ```gradlew test --tests OrderFormTest --tests StoreDataIntoMySqlTest```
 
 - Для PostgreSQL:
 
 ```docker-compose -f docker-compose-postgres.yml up -d```
+
 ```gradlew test --tests OrderFormTest --tests StoreDataIntoPgSqlTest```
 
 ## Работа с данными
