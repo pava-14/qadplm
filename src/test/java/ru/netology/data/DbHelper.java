@@ -19,14 +19,13 @@ public class DbHelper {
         val truncatePaymentSQL = "TRUNCATE TABLE payment_entity;";
         val truncateCrefitSQL = "TRUNCATE TABLE credit_request_entity;";
         val runner = new QueryRunner();
-        try {
-            try (val conn = DriverManager.getConnection(url, user, password)) {
-                runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
-                runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
-                runner.execute(conn, truncateCrefitSQL, new ScalarHandler<>());
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        try (val conn = DriverManager.getConnection(url, user, password)) {
+            runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
+            runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
+            runner.execute(conn, truncateCrefitSQL, new ScalarHandler<>());
+        }
+        catch (SQLException throwables) {
+            /* throwables.printStackTrace(); */
         }
     }
 
@@ -34,12 +33,10 @@ public class DbHelper {
         String url = (usePgDb) ? urlPostgres : urlMysql;
         val runner = new QueryRunner();
         String result = "";
-        try {
-            try (val conn = DriverManager.getConnection(url, user, password)) {
-                result = runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
-            }
+        try (val conn = DriverManager.getConnection(url, user, password)) {
+            result = runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            /* throwables.printStackTrace(); */
         }
         return result;
     }
@@ -65,5 +62,4 @@ public class DbHelper {
                 + "WHERE payment_entity.amount = ?;";
         return getOperationStatus(amount, statusSQL, usePgDb);
     }
-
 }
