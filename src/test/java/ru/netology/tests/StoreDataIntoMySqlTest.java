@@ -41,7 +41,7 @@ public class StoreDataIntoMySqlTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
-        String actualStatus = DbHelper.getOrderInfo(SutData.amount, false, false);
+        String actualStatus = DbHelper.getPaymebtInfo(SutData.amount, false);
         assertEquals(SutData.approvedStatus, actualStatus);
     }
 
@@ -52,7 +52,7 @@ public class StoreDataIntoMySqlTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
-        String actualStatus = DbHelper.getOrderInfo(SutData.amount, true, false);
+        String actualStatus = DbHelper.getCreditInfo(SutData.amount, false);
         assertEquals(SutData.approvedStatus, actualStatus);
     }
 
@@ -63,7 +63,7 @@ public class StoreDataIntoMySqlTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
-        String actualStatus = DbHelper.getOrderInfo(SutData.amount, false, false);
+        String actualStatus = DbHelper.getPaymebtInfo(SutData.amount, false);
         assertEquals(SutData.declinedStatus, actualStatus);
     }
 
@@ -74,7 +74,7 @@ public class StoreDataIntoMySqlTest {
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
-        String actualStatus = DbHelper.getOrderInfo(SutData.amount, true, false);
+        String actualStatus = DbHelper.getCreditInfo(SutData.amount, false);
         assertEquals(SutData.declinedStatus, actualStatus);
     }
 }

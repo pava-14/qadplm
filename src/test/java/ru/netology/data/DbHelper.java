@@ -30,21 +30,8 @@ public class DbHelper {
         }
     }
 
-    public static String getOrderInfo(int amount, boolean credit, boolean usePgDb) {
+    private static String getOperationStatus(int amount, String statusSQL, boolean usePgDb) {
         String url = (usePgDb) ? urlPostgres : urlMysql;
-        val statusSQL = (credit) ?
-                "SELECT payment_entity.status "
-                        + "FROM payment_entity "
-                        + "INNER JOIN order_entity "
-                        + "ON payment_entity.id = order_entity.payment_id "
-                        + "INNER JOIN credit_request_entity "
-                        + "ON order_entity.credit_id = credit_request_entity.id "
-                        + "WHERE payment_entity.amount = ?;" :
-                "SELECT payment_entity.status "
-                        + "FROM payment_entity "
-                        + "INNER JOIN order_entity "
-                        + "ON order_entity.payment_id = payment_entity.id "
-                        + "WHERE payment_entity.amount = ?;";
         val runner = new QueryRunner();
         String result = "";
         try {
@@ -56,4 +43,27 @@ public class DbHelper {
         }
         return result;
     }
+
+    public static String getPaymebtInfo(int amount, boolean usePgDb) {
+        String url = (usePgDb) ? urlPostgres : urlMysql;
+        val statusSQL = "SELECT payment_entity.status "
+                + "FROM payment_entity "
+                + "INNER JOIN order_entity "
+                + "ON order_entity.payment_id = payment_entity.id "
+                + "WHERE payment_entity.amount = ?;";
+        return getOperationStatus(amount, statusSQL, usePgDb);
+    }
+
+    public static String getCreditInfo(int amount, boolean usePgDb) {
+        String url = (usePgDb) ? urlPostgres : urlMysql;
+        val statusSQL = "SELECT payment_entity.status "
+                + "FROM payment_entity "
+                + "INNER JOIN order_entity "
+                + "ON payment_entity.id = order_entity.payment_id "
+                + "INNER JOIN credit_request_entity "
+                + "ON order_entity.credit_id = credit_request_entity.id "
+                + "WHERE payment_entity.amount = ?;";
+        return getOperationStatus(amount, statusSQL, usePgDb);
+    }
+
 }
