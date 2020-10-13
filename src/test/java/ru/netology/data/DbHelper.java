@@ -1,5 +1,6 @@
 package ru.netology.data;
 
+import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -23,22 +24,17 @@ public class DbHelper {
             runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
             runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
             runner.execute(conn, truncateCrefitSQL, new ScalarHandler<>());
-        }
-        catch (SQLException throwables) {
-            /* throwables.printStackTrace(); */
+        } catch (SQLException throwables) {
+            //nothing to do
         }
     }
 
+    @SneakyThrows
     private static String getOperationStatus(int amount, String statusSQL, boolean usePgDb) {
         String url = (usePgDb) ? urlPostgres : urlMysql;
         val runner = new QueryRunner();
-        String result = "";
-        try (val conn = DriverManager.getConnection(url, user, password)) {
-            result = runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
-        } catch (SQLException throwables) {
-            /* throwables.printStackTrace(); */
-        }
-        return result;
+        val conn = DriverManager.getConnection(url, user, password);
+        return runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
     }
 
     public static String getPaymebtInfo(int amount, boolean usePgDb) {
