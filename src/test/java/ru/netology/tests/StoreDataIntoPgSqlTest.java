@@ -39,7 +39,7 @@ public class StoreDataIntoPgSqlTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
-        orderPage.waitForApproved();
+        orderPage.shouldBeApproved();
         String actualStatus = DbHelper.getPaymebtInfo(SutData.amount, true);
         assertEquals(SutData.approvedStatus, actualStatus);
     }
@@ -50,7 +50,7 @@ public class StoreDataIntoPgSqlTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
-        orderPage.waitForApproved();
+        orderPage.shouldBeApproved();
         String actualStatus = DbHelper.getCreditInfo(SutData.amount, true);
         assertEquals(SutData.approvedStatus, actualStatus);
     }
@@ -61,7 +61,7 @@ public class StoreDataIntoPgSqlTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-        orderPage.waitForDeclined();
+        orderPage.shouldBeDeclined();
         String actualStatus = DbHelper.getPaymebtInfo(SutData.amount, true);
         assertEquals(SutData.declinedStatus, actualStatus);
     }
@@ -72,7 +72,7 @@ public class StoreDataIntoPgSqlTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-        orderPage.waitForDeclined();
+        orderPage.shouldBeDeclined();
         String actualStatus = DbHelper.getCreditInfo(SutData.amount, true);
         assertEquals(SutData.declinedStatus, actualStatus);
     }

@@ -39,29 +39,29 @@ public class OrderPage {
         $(withText(buttonContinueCaption)).click();
     }
 
-    public void waitForApproved() {
+    public void shouldBeApproved() {
         $(withText(approvedMessage)).waitUntil(visible, 15000);
     }
 
-    public void waitForDeclined() {
+    public void shouldBeDeclined() {
         $(withText(declinedMessage)).waitUntil(visible, 15000);
     }
 
-    public void waitForIncorrectFormat() {
+    public void shouldBeIncorrectFormat() {
         $(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
     }
 
-    public void waitForSmallMonthYearError() {
+    public void shouldBeSmallMonthYearError() {
         $(withText(incorrectSmallMonthYearText)).
                 waitUntil(visible, 15000);
     }
 
-    public void waitForBigMonthYearError() {
+    public void shouldBeBigMonthYearError() {
         $(withText(incorrectBigMonthYearText)).
                 waitUntil(visible, 15000);
     }
 
-    public void waitForEmptyAllFieldsErrors() {
+    public void shouldBeEmptyAllFieldsErrors() {
         List<SelenideElement> errorMessagesBox = $$(fieldErrorSelector);
         errorMessagesBox.get(0).$(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
         errorMessagesBox.get(1).$(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
@@ -70,13 +70,9 @@ public class OrderPage {
         errorMessagesBox.get(4).$(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
     }
 
-    public void waitForIncorrectNumberAndCvcErrors() {
+    public void shouldBeIncorrectNumberAndCvcErrors() {
         List<SelenideElement> errorMessagesBox = $$(fieldErrorSelector);
         errorMessagesBox.get(0).$(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
         errorMessagesBox.get(4).$(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
-    }
-
-    public void waitForIncorrectOwner() {
-        $(withText(incorrectFormatErrorText)).waitUntil(visible, 15000);
     }
 }

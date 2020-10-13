@@ -42,7 +42,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
-        orderPage.waitForApproved();
+        orderPage.shouldBeApproved();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
-        orderPage.waitForApproved();
+        orderPage.shouldBeApproved();
     }
 
     @Test
@@ -58,7 +58,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-        orderPage.waitForDeclined();
+        orderPage.shouldBeDeclined();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
-        orderPage.waitForDeclined();
+        orderPage.shouldBeDeclined();
     }
 
     @Test
@@ -74,7 +74,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithUnknownCardNumber());
         orderPage.sendData();
-        orderPage.waitForDeclined();
+        orderPage.shouldBeDeclined();
     }
 
     @Test
@@ -82,7 +82,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithUnknownCardNumber());
         orderPage.sendData();
-        orderPage.waitForDeclined();
+        orderPage.shouldBeDeclined();
     }
 
     @Test
@@ -90,7 +90,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallYear());
         orderPage.sendData();
-        orderPage.waitForSmallMonthYearError();
+        orderPage.shouldBeSmallMonthYearError();
     }
 
     @Test
@@ -98,7 +98,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigYear());
         orderPage.sendData();
-        orderPage.waitForBigMonthYearError();
+        orderPage.shouldBeBigMonthYearError();
     }
 
     @Test
@@ -106,7 +106,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallYear());
         orderPage.sendData();
-        orderPage.waitForSmallMonthYearError();
+        orderPage.shouldBeSmallMonthYearError();
     }
 
     @Test
@@ -114,7 +114,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigYear());
         orderPage.sendData();
-        orderPage.waitForBigMonthYearError();
+        orderPage.shouldBeBigMonthYearError();
     }
 
     @Test
@@ -122,7 +122,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallMonth());
         orderPage.sendData();
-        orderPage.waitForSmallMonthYearError();
+        orderPage.shouldBeSmallMonthYearError();
     }
 
     @Test
@@ -130,7 +130,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigMonth());
         orderPage.sendData();
-        orderPage.waitForBigMonthYearError();
+        orderPage.shouldBeBigMonthYearError();
     }
 
     @Test
@@ -138,7 +138,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallMonth());
         orderPage.sendData();
-        orderPage.waitForSmallMonthYearError();
+        orderPage.shouldBeSmallMonthYearError();
     }
 
     @Test
@@ -146,21 +146,21 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigMonth());
         orderPage.sendData();
-        orderPage.waitForBigMonthYearError();
+        orderPage.shouldBeBigMonthYearError();
     }
 
     @Test
     public void shouldNotSendCreditByCardWithEmtyFields() {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.sendData();
-        orderPage.waitForEmptyAllFieldsErrors();
+        orderPage.shouldBeEmptyAllFieldsErrors();
     }
 
     @Test
     public void shouldNotSendOrderByCardWithEmptyFields() {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.sendData();
-        orderPage.waitForEmptyAllFieldsErrors();
+        orderPage.shouldBeEmptyAllFieldsErrors();
     }
 
     @Test
@@ -168,7 +168,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectCardNumberAndCvc());
         orderPage.sendData();
-        orderPage.waitForIncorrectNumberAndCvcErrors();
+        orderPage.shouldBeIncorrectNumberAndCvcErrors();
     }
 
     @Test
@@ -176,7 +176,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectCardNumberAndCvc());
         orderPage.sendData();
-        orderPage.waitForIncorrectNumberAndCvcErrors();
+        orderPage.shouldBeIncorrectNumberAndCvcErrors();
     }
 
     @Test
@@ -184,7 +184,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectOwnerByCyrillic());
         orderPage.sendData();
-        orderPage.waitForIncorrectFormat();
+        orderPage.shouldBeIncorrectFormat();
     }
 
     @Test
@@ -192,7 +192,7 @@ public class OrderFormTest {
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectOwnerByCyrillic());
         orderPage.sendData();
-        orderPage.waitForIncorrectFormat();
+        orderPage.shouldBeIncorrectFormat();
     }
 
 }
