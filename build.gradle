@@ -37,6 +37,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    /*
+    When you run gradle test -Darg1=smth, you pass system parameter arg1 to the Gradle JVM, not the test JVM where tests are run. It is designed this way to protect tests from side effects.
+    If you need to propagate parameters to tests, use something like this
+    test {
+        systemProperty 'arg1', System.getProperty('arg1')
+    }
+     */
     // в тестах, вызывая `gradlew test -Dselenide.headless=true` будем передавать этот параметр в JVM (где его подтянет Selenide)
     systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+    systemProperty 'db.url', System.getProperty('db.url')
 }
