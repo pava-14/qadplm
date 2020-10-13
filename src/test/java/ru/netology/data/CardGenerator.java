@@ -37,11 +37,6 @@ public class CardGenerator {
                     unknownCardNumber, validCardMonth, validCardYear, validCardOwner, validCardCvcCvv);
         }
 
-        public static Card getCardInfoWithIncorrectCardNumber() {
-            return new Card(
-                    incorrectCardNumber, validCardMonth, validCardYear, validCardOwner, validCardCvcCvv);
-        }
-
         public static Card getCardInfoWithTooSmallYear() {
             return new Card(
                     approvedCardNumber, validCardMonth, tooSmallYear, validCardOwner, validCardCvcCvv);
