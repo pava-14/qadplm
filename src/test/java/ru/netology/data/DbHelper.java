@@ -9,10 +9,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbHelper {
-    private final static String urlMysql = "jdbc:mysql://localhost:3306/app";
+//    private final static String urlMysql = "jdbc:mysql://localhost:3306/app";
+    private final static String urlMysql = "jdbc:mysql://host.docker.internal:3306/app";
     private final static String urlPostgres = "jdbc:postgresql://host.docker.internal:5432/app";
     private final static String user = "app";
     private final static String password = "pass";
+
+    private static String getDbUrl() {
+        String dbUrl = System.getProperty("db.url");
+        return dbUrl;
+    }
 
     public static void clearTable(boolean usePostgres) {
         String url = (usePostgres) ? urlPostgres : urlMysql;
