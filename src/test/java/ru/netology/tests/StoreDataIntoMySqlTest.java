@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreDataIntoMySqlTest {
     private StartPage startPage;
-    private OrderPage orderPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -37,7 +36,7 @@ public class StoreDataIntoMySqlTest {
     @Test
     public void shouldStoreApprovedOrderByCardIntoMySqlDatabase() {
         DbHelper.clearTable(false);
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
@@ -48,7 +47,7 @@ public class StoreDataIntoMySqlTest {
     @Test
     public void shouldStoreApprovedCreditByCardIntoMySqlDatabase() {
         DbHelper.clearTable(false);
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
@@ -59,7 +58,7 @@ public class StoreDataIntoMySqlTest {
     @Test
     public void shouldStoreDeclinedOrderByCardIntoMySqlDatabase() {
         DbHelper.clearTable(false);
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
@@ -70,7 +69,7 @@ public class StoreDataIntoMySqlTest {
     @Test
     public void shouldStoreDeclinedCreditByCardIntoMySqlDatabase() {
         DbHelper.clearTable(false);
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();

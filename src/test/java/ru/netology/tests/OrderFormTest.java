@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OrderFormTest {
     private StartPage startPage;
-    private OrderPage orderPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -48,7 +47,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldApprovedOrderByCard() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
@@ -64,7 +63,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldDeclinedOrderByDeclinedCard() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
@@ -72,7 +71,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldDeclinedCreditByUnknownCard() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithUnknownCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
@@ -80,7 +79,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldDeclinedOrderByUnknownCard() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithUnknownCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
@@ -88,7 +87,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendOrderByCardWithTooSmallYear() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallYear());
         orderPage.sendData();
         orderPage.waitForSmallMonthYearError();
@@ -96,7 +95,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendOrderByCardWithTooBigYear() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigYear());
         orderPage.sendData();
         orderPage.waitForBigMonthYearError();
@@ -104,7 +103,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendCreditByCardWithTooSmallYear() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallYear());
         orderPage.sendData();
         orderPage.waitForSmallMonthYearError();
@@ -112,7 +111,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendCreditByCardWithTooBigYear() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigYear());
         orderPage.sendData();
         orderPage.waitForBigMonthYearError();
@@ -120,7 +119,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendOrderByCardWithTooSmallMonth() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallMonth());
         orderPage.sendData();
         orderPage.waitForSmallMonthYearError();
@@ -128,7 +127,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendOrderByCardWithTooBigMonth() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigMonth());
         orderPage.sendData();
         orderPage.waitForBigMonthYearError();
@@ -136,7 +135,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendCreditByCardWithTooSmallMonth() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooSmallMonth());
         orderPage.sendData();
         orderPage.waitForSmallMonthYearError();
@@ -144,7 +143,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendCreditByCardWithTooBigMonth() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithTooBigMonth());
         orderPage.sendData();
         orderPage.waitForBigMonthYearError();
@@ -152,21 +151,21 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendCreditByCardWithEmtyFields() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.sendData();
         orderPage.waitForEmptyAllFieldsErrors();
     }
 
     @Test
     public void shouldNotSendOrderByCardWithEmptyFields() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.sendData();
         orderPage.waitForEmptyAllFieldsErrors();
     }
 
     @Test
     public void shouldNotSendCreditByCardWithIncorrectNumberAndCvc() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectCardNumberAndCvc());
         orderPage.sendData();
         orderPage.waitForIncorrectNumberAndCvcErrors();
@@ -174,7 +173,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendOrderByCardWithIncorrectNumberAndCvc() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectCardNumberAndCvc());
         orderPage.sendData();
         orderPage.waitForIncorrectNumberAndCvcErrors();
@@ -182,7 +181,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendCreditByCardWithIncorrectOwner() {
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectOwnerByCyrillic());
         orderPage.sendData();
         orderPage.waitForIncorrectFormat();
@@ -190,7 +189,7 @@ public class OrderFormTest {
 
     @Test
     public void shouldNotSendOrderByCardWithIncorrectOwner() {
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithIncorrectOwnerByCyrillic());
         orderPage.sendData();
         orderPage.waitForIncorrectFormat();

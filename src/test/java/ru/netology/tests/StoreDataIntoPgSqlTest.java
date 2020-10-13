@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreDataIntoPgSqlTest {
     private StartPage startPage;
-    private OrderPage orderPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -37,7 +36,7 @@ public class StoreDataIntoPgSqlTest {
     @Test
     public void shouldStoreApprovedOrderByCardIntoMyPgDatabase() {
         DbHelper.clearTable(true);
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
@@ -48,7 +47,7 @@ public class StoreDataIntoPgSqlTest {
     @Test
     public void shouldStoreApprovedCreditByCardIntoPgDatabase() {
         DbHelper.clearTable(true);
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.waitForApproved();
@@ -59,7 +58,7 @@ public class StoreDataIntoPgSqlTest {
     @Test
     public void shouldStoreDeclinedOrderByCardIntoMyPgDatabase() {
         DbHelper.clearTable(true);
-        orderPage = startPage.selectOrderByCard();
+        OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
@@ -70,7 +69,7 @@ public class StoreDataIntoPgSqlTest {
     @Test
     public void shouldStoreDeclinedCreditByCardIntoMyPgDatabase() {
         DbHelper.clearTable(true);
-        orderPage = startPage.selectOrderByCredit();
+        OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.waitForDeclined();
