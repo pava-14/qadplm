@@ -2,6 +2,7 @@ package ru.netology.tests;
 
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,14 +14,21 @@ import ru.netology.pages.OrderPage;
 import ru.netology.pages.StartPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StoreDataIntoDatabaseTest {
     private StartPage startPage;
     private OrderPage orderPage;
 
+    @SneakyThrows
+    static void waitOnAppStart () {
+        sleep(60 * 1000);
+    }
+
     @BeforeAll
     static void setUpAll() {
+        waitOnAppStart();
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
