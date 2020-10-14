@@ -18,7 +18,7 @@ install:
 #  - docker-compose -f ./docker-compose-mysql.yml up -d
   - sudo docker-compose -f ./docker-compose-mysql.yml up -d
   - sudo docker logs gate-simulator
-  - sleeo 30
+  - sleep 30
   - sudo docker logs aqa-shop-mysql
   - sleep 30
   - java -jar ./aqa-shop-mysql/aqa-shop.jar &
