@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the docker-compose stack
-      run: docker-compose -f docker-compose-mysql.yml up -d
+      run: docker-compose -f docker-compose-postgres.yml up -d
     - name: Check running containers
       run: docker ps -a
     - name: Check logs gate-simulator
@@ -28,7 +28,7 @@ jobs:
         java-version: 11
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Check logs aqa-shop-mysql
-      run: docker logs aqa-shop-mysql
+    - name: Check logs aqa-shop-postgres
+      run: docker logs aqa-shop-postgres
     - name: Build with Gradle
-      run: ./gradlew test -Dselenide.headless=true --info --tests OrderFormTest --tests StoreDataIntoPgSqlTest
+      run: ./gradlew test -Dselenide.headless=true -Ddb.url=jdbc:postgresql://host.docker.internal:5432/app

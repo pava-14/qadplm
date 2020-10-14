@@ -150,7 +150,7 @@ public class OrderFormTest {
     }
 
     @Test
-    public void shouldNotSendCreditByCardWithEmtyFields() {
+    public void shouldNotSendCreditByCardWithEmptyFields() {
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.sendData();
         orderPage.shouldBeEmptyAllFieldsErrors();

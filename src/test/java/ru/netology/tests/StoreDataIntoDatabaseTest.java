@@ -15,8 +15,9 @@ import ru.netology.pages.StartPage;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StoreDataIntoPgSqlTest {
+public class StoreDataIntoDatabaseTest {
     private StartPage startPage;
+    private OrderPage orderPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -34,46 +35,46 @@ public class StoreDataIntoPgSqlTest {
     }
 
     @Test
-    public void shouldStoreApprovedOrderByCardIntoMyPgDatabase() {
-        DbHelper.clearTable(true);
+    public void shouldStoreApprovedOrderByCardIntoDatabase() {
+        DbHelper.clearTable();
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.shouldBeApproved();
-        String actualStatus = DbHelper.getPaymebtInfo(SutData.amount, true);
+        String actualStatus = DbHelper.getPaymentInfo(SutData.amount);
         assertEquals(SutData.approvedStatus, actualStatus);
     }
 
     @Test
-    public void shouldStoreApprovedCreditByCardIntoPgDatabase() {
-        DbHelper.clearTable(true);
+    public void shouldStoreApprovedCreditByCardIntoDatabase() {
+        DbHelper.clearTable();
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithApprovedCardNumber());
         orderPage.sendData();
         orderPage.shouldBeApproved();
-        String actualStatus = DbHelper.getCreditInfo(SutData.amount, true);
+        String actualStatus = DbHelper.getCreditInfo(SutData.amount);
         assertEquals(SutData.approvedStatus, actualStatus);
     }
 
     @Test
-    public void shouldStoreDeclinedOrderByCardIntoMyPgDatabase() {
-        DbHelper.clearTable(true);
+    public void shouldStoreDeclinedOrderByCardIntoDatabase() {
+        DbHelper.clearTable();
         OrderPage orderPage = startPage.selectOrderByCard();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.shouldBeDeclined();
-        String actualStatus = DbHelper.getPaymebtInfo(SutData.amount, true);
+        String actualStatus = DbHelper.getPaymentInfo(SutData.amount);
         assertEquals(SutData.declinedStatus, actualStatus);
     }
 
     @Test
-    public void shouldStoreDeclinedCreditByCardIntoMyPgDatabase() {
-        DbHelper.clearTable(true);
+    public void shouldStoreDeclinedCreditByCardIntoDatabase() {
+        DbHelper.clearTable();
         OrderPage orderPage = startPage.selectOrderByCredit();
         orderPage.setCardFields(CardGenerator.CardInfo.getCardInfoWithDeclinedCardNumber());
         orderPage.sendData();
         orderPage.shouldBeDeclined();
-        String actualStatus = DbHelper.getCreditInfo(SutData.amount, true);
+        String actualStatus = DbHelper.getCreditInfo(SutData.amount);
         assertEquals(SutData.declinedStatus, actualStatus);
     }
 }

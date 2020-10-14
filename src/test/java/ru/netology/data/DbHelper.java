@@ -6,55 +6,51 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DbHelper {
-//    private final static String urlMysql = "jdbc:mysql://localhost:3306/app";
-    private final static String urlMysql = "jdbc:mysql://host.docker.internal:3306/app";
-    private final static String urlPostgres = "jdbc:postgresql://host.docker.internal:5432/app";
+    private final static String dbUrlDefault = "jdbc:mysql://host.docker.internal:3306/app";
     private final static String user = "app";
     private final static String password = "pass";
 
     private static String getDbUrl() {
         String dbUrl = System.getProperty("db.url");
+        if (dbUrl.isEmpty()) {
+            dbUrl = dbUrlDefault;
+        }
         return dbUrl;
     }
 
-    public static void clearTable(boolean usePostgres) {
-        String url = (usePostgres) ? urlPostgres : urlMysql;
+    @SneakyThrows
+    public static void clearTable() {
+        String url = getDbUrl();
         val truncateOrderSQL = "TRUNCATE TABLE order_entity;";
         val truncatePaymentSQL = "TRUNCATE TABLE payment_entity;";
-        val truncateCrefitSQL = "TRUNCATE TABLE credit_request_entity;";
+        val truncateCreditSQL = "TRUNCATE TABLE credit_request_entity;";
         val runner = new QueryRunner();
-        try (val conn = DriverManager.getConnection(url, user, password)) {
-            runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
-            runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
-            runner.execute(conn, truncateCrefitSQL, new ScalarHandler<>());
-        } catch (SQLException throwables) {
-            //nothing to do
-        }
+        val conn = DriverManager.getConnection(url, user, password);
+        runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
+        runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
+        runner.execute(conn, truncateCreditSQL, new ScalarHandler<>());
     }
 
     @SneakyThrows
-    private static String getOperationStatus(int amount, String statusSQL, boolean usePgDb) {
-        String url = (usePgDb) ? urlPostgres : urlMysql;
+    private static String getOperationStatus(int amount, String statusSQL) {
+        String url = getDbUrl();
         val runner = new QueryRunner();
         val conn = DriverManager.getConnection(url, user, password);
         return runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
     }
 
-    public static String getPaymebtInfo(int amount, boolean usePgDb) {
-        String url = (usePgDb) ? urlPostgres : urlMysql;
+    public static String getPaymentInfo(int amount) {
         val statusSQL = "SELECT payment_entity.status "
                 + "FROM payment_entity "
                 + "INNER JOIN order_entity "
                 + "ON order_entity.payment_id = payment_entity.id "
                 + "WHERE payment_entity.amount = ?;";
-        return getOperationStatus(amount, statusSQL, usePgDb);
+        return getOperationStatus(amount, statusSQL);
     }
 
-    public static String getCreditInfo(int amount, boolean usePgDb) {
-        String url = (usePgDb) ? urlPostgres : urlMysql;
+    public static String getCreditInfo(int amount) {
         val statusSQL = "SELECT payment_entity.status "
                 + "FROM payment_entity "
                 + "INNER JOIN order_entity "
@@ -62,6 +58,6 @@ public class DbHelper {
                 + "INNER JOIN credit_request_entity "
                 + "ON order_entity.credit_id = credit_request_entity.id "
                 + "WHERE payment_entity.amount = ?;";
-        return getOperationStatus(amount, statusSQL, usePgDb);
+        return getOperationStatus(amount, statusSQL);
     }
 }

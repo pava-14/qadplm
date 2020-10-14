@@ -6,13 +6,13 @@
 
 ```docker-compose -f docker-compose-mysql.yml up -d```
 
-```gradlew test --tests OrderFormTest --tests StoreDataIntoMySqlTest```
+```gradlew test -Ddb.url=jdbc:mysql://host.docker.internal:3306/app```
 
 - Для PostgreSQL:
 
 ```docker-compose -f docker-compose-postgres.yml up -d```
 
-```gradlew test --tests OrderFormTest --tests StoreDataIntoPgSqlTest```
+```gradlew test -Ddb.url=jdbc:postgresql://host.docker.internal:5432/app```
 
 ## Работа с данными
 
