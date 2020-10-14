@@ -19,14 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class OrderFormTest {
     private StartPage startPage;
 
-    @SneakyThrows
-    static void waitOnAppStart () {
-        sleep(60 * 1000);
-    }
-
     @BeforeAll
     static void setUpAll() {
-        waitOnAppStart();
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 

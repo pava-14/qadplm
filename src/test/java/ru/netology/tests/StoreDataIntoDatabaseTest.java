@@ -21,14 +21,8 @@ public class StoreDataIntoDatabaseTest {
     private StartPage startPage;
     private OrderPage orderPage;
 
-    @SneakyThrows
-    static void waitOnAppStart () {
-        sleep(60 * 1000);
-    }
-
     @BeforeAll
     static void setUpAll() {
-        waitOnAppStart();
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 

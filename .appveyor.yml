@@ -1,4 +1,4 @@
-#image: Ubuntu  # образ для сборки
+image: Ubuntu  # образ для сборки
 #image: Visual Studio 2019
 
 stack: jdk 11  # версия JDK
@@ -12,12 +12,14 @@ build: off  # будем использовать свой скрипт сбор
 install:
   - chmod +x ./gradlew
   # запускаем SUT (& означает, что в фоновом режиме - не блокируем терминал для запуска тестов)
-  - choco install docker-compose
-  #- sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  - docker-compose -f ./docker-compose-mysql.yml up -d
+#  - choco install docker-compose
+  - ps: sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  - ps: sudo chmod +x /usr/local/bin/docker-compose
+#  - docker-compose -f ./docker-compose-mysql.yml up -d
+  - ps: sudo docker-compose -f ./docker-compose-mysql.yml up -d
   - docker logs gate-simulator
-  - docker logs aqa-shop-postgres
-
+  - docker logs aqa-shop-mysql
+  - sleep 30
 build_script:
   # запускаем тест, флаг --info позволяет выводить больше информации
-  - ./gradlew test -Dselenide.headless=true -Ddb.url=jdbc:mysql://host.docker.internal:3306/app
+  - ./gradlew test -Dselenide.headless=true -Ddb.url=jdbc:mysql://host.docker.internal:3306/app --info
