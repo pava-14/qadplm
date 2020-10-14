@@ -20,8 +20,7 @@ install:
   - sudo docker logs gate-simulator
   - sleep 30
   - sudo docker logs aqa-shop-mysql
-  - sleep 30
-  - java -jar ./aqa-shop-mysql/aqa-shop.jar &
+  - java -jar ./aqa-shop.mysql/aqa-shop.jar &
 build_script:
   # запускаем тест, флаг --info позволяет выводить больше информации
   - ./gradlew test -Dselenide.headless=true -Ddb.url=jdbc:mysql://host.docker.internal:3306/app --info
