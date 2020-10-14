@@ -17,8 +17,8 @@ install:
   - ps: sudo chmod +x /usr/local/bin/docker-compose
 #  - docker-compose -f ./docker-compose-mysql.yml up -d
   - ps: sudo docker-compose -f ./docker-compose-mysql.yml up -d
-  - docker logs gate-simulator
-  - docker logs aqa-shop-mysql
+  - sudo docker logs gate-simulator
+  - sudo docker logs aqa-shop-mysql
   - sleep 30
 build_script:
   # запускаем тест, флаг --info позволяет выводить больше информации

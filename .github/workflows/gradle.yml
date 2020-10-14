@@ -27,7 +27,7 @@ jobs:
     - name: Check logs aqa-shop-mysql
       run: docker logs aqa-shop-mysql
     - name: Wait for containers startd
-      run: sleep 30
+      run: sleep 60
     - name: Check logs aqa-shop-mysql
       run: docker logs aqa-shop-mysql
     - name: Set up JDK 11
