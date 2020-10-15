@@ -16,7 +16,7 @@ install:
   - sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   - sudo chmod +x /usr/local/bin/docker-compose
 #  - docker-compose -f ./docker-compose-mysql.yml up -d
-  - sudo docker-compose -f ./docker-compose-mysql.yml up -d
+  - sudo docker-compose -f ./docker-compose-mysql.yml up --build -d
   - sudo docker logs gate-simulator
   - sleep 30
   - sudo docker logs aqa-shop-mysql
