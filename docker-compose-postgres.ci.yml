@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:12-alpine
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=pass  
+  gate:
+    container_name: gate-simulator
+    build: ./gate-simulator
+    image: gate-simulator:1.0
+    ports:
+      - '9999:9999'
+    restart: on-failure
+#  aqa-shop:
+#    container_name: aqa-shop-postgres
+#    build: ./aqa-shop.postgres
+#    image: aqa-shop-postgres:1.0
+#    ports:
+#      - '8080:8080'
+#    restart: on-failure
+#    depends_on:
+#      - gate
+#      - postgres
