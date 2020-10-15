@@ -14,6 +14,10 @@
 
 ```gradlew test -Ddb.url=jdbc:postgresql://host.docker.internal:5432/app```
 
+- По умолчанию, 
+
+```db.url=jdbc:mysql://host.docker.internal:3306/app```
+
 ## Работа с данными
 
 ### Просмотр данных в таблицах 
