@@ -22,17 +22,13 @@ jobs:
       run: docker ps -a
     - name: Wait for containers start
       run: sleep 30
-    - name: Update repository
-      run: sudo apt-get update
-    - name: Install net-tools
-      run: sudo apt-get install net-tools
     - name: Hands start app
       run: java -jar ./aqa-shop.mysql/aqa-shop.jar &
     - name: Wait for containers start
       run: sleep 30
     - name: Check for aqa-shop's port (hands run)
-      run: sudo netstat -ltnp | grep -w ':8080'
-    - name: Check aqa-shop StartPage
+#      run: sudo netstat -ltnp | grep -w ':8080'
+#    - name: Check aqa-shop StartPage
       run: sudo curl localhost:8080
     - name: Set up JDK 11
       uses: actions/setup-java@v1
