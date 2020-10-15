@@ -25,7 +25,7 @@ jobs:
     - name: Go to aqa-shop.mysql
       run: cd ./aqa-shop.mysql
     - name: Start aqa-shop
-      run: java -jar aqa-shop.jar &
+      run: java -jar ./aqa-shop.jar &
     - name: Wait for containers start
       run: sleep 30
     - name: Check for aqa-shop's port (hands run)
