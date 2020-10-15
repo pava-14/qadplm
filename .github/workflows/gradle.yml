@@ -18,19 +18,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the docker-compose stack
       run: docker-compose -f docker-compose-mysql.ci.yml up --build -d
-    - name: Check running containers
-      run: docker ps -a
     - name: Wait for containers start
       run: sleep 30
-    - name: Go to aqa-shop.mysql
-      run: cd ./aqa-shop.mysql
     - name: Start aqa-shop
-      run: java -jar ./aqa-shop.jar &
-    - name: Wait for containers start
-      run: sleep 30
-    - name: Check for aqa-shop's port (hands run)
-#      run: sudo netstat -ltnp | grep -w ':8080'
-#    - name: Check aqa-shop StartPage
+      run: sudo java -Dspring.credit-gate.url=http://localhost:9999/credit -Dspring.payment-gate.url=http://localhost:9999/payment -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -Dspring.datasource.username=app -Dspring.datasource.password=pass -jar ./aqa-shop.mysql/aqa-shop.jar &
+    - name: Check for aqa-shop's respond
       run: sudo curl localhost:8080
     - name: Set up JDK 11
       uses: actions/setup-java@v1
