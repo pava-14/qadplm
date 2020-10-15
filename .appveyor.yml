@@ -14,7 +14,8 @@ install:
   - sudo chmod +x /usr/local/bin/docker-compose
   - sudo docker-compose -f ./docker-compose-mysql.ci.yml up --build -d
   - sleep 30
-  - java -Dspring.credit-gate.url=http://localhost:9999/credit -Dspring.payment-gate.url=http://localhost:9999/payment -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -Dspring.datasource.username=app -Dspring.datasource.password=pass -jar ./aqa-shop.mysql/aqa-shop.jar &
+  - sudo java -Dspring.credit-gate.url=http://localhost:9999/credit -Dspring.payment-gate.url=http://localhost:9999/payment -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -Dspring.datasource.username=app -Dspring.datasource.password=pass -jar ./aqa-shop.mysql/aqa-shop.jar &
+  - sleep 30
   - sudo curl localhost:8080
 build_script:
   # запускаем тест, флаг --info позволяет выводить больше информации

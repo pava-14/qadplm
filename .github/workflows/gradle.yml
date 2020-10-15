@@ -22,6 +22,8 @@ jobs:
       run: sleep 30
     - name: Start aqa-shop
       run: sudo java -Dspring.credit-gate.url=http://localhost:9999/credit -Dspring.payment-gate.url=http://localhost:9999/payment -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -Dspring.datasource.username=app -Dspring.datasource.password=pass -jar ./aqa-shop.mysql/aqa-shop.jar &
+    - name: Wait for aqa-shop start
+      run: sleep 30
     - name: Check for aqa-shop's respond
       run: sudo curl localhost:8080
     - name: Set up JDK 11
