@@ -45,3 +45,5 @@
 [Отчёт по итогам тестирования](https://github.com/pava-14/qadplm/blob/master/Report.md)
 
 [Отчёт по итогам автоматизации](https://github.com/pava-14/qadplm/blob/master/Summary.md)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/i9yb3ium1awcukpr/branch/master?svg=true)](https://ci.appveyor.com/project/pava-14/qadplm/branch/master)
