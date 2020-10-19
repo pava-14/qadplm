@@ -1,11 +1,14 @@
 package ru.netology.data;
 
-import lombok.SneakyThrows;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import static org.apache.commons.dbutils.DbUtils.close;
 
 public class DbHelper {
     private final static String dbUrlDefault = "jdbc:mysql://host.docker.internal:3306/app";
@@ -20,25 +23,47 @@ public class DbHelper {
         return dbUrl;
     }
 
-    @SneakyThrows
     public static void clearTable() {
         String url = getDbUrl();
         val truncateOrderSQL = "TRUNCATE TABLE order_entity;";
         val truncatePaymentSQL = "TRUNCATE TABLE payment_entity;";
         val truncateCreditSQL = "TRUNCATE TABLE credit_request_entity;";
         val runner = new QueryRunner();
-        val conn = DriverManager.getConnection(url, user, password);
-        runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
-        runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
-        runner.execute(conn, truncateCreditSQL, new ScalarHandler<>());
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            runner.execute(conn, truncateOrderSQL, new ScalarHandler<>());
+            runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
+            runner.execute(conn, truncateCreditSQL, new ScalarHandler<>());
+        } catch (SQLException e) {
+            //do nothing
+        } finally {
+            try {
+                close(conn);
+            } catch (SQLException e) {
+                //do nothing
+            }
+        }
     }
 
-    @SneakyThrows
     private static String getOperationStatus(int amount, String statusSQL) {
         String url = getDbUrl();
         val runner = new QueryRunner();
-        val conn = DriverManager.getConnection(url, user, password);
-        return runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
+        Connection conn = null;
+        String status = "";
+        try {
+            conn = DriverManager.getConnection(url, user, password);
+            status = runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
+        } catch (SQLException e) {
+            //do nothing
+        } finally {
+            try {
+                close(conn);
+            } catch (SQLException e) {
+                //do nothing
+            }
+        }
+        return status;
     }
 
     public static String getPaymentInfo(int amount) {
