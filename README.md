@@ -32,6 +32,10 @@
 
 Автоматизировать сценарии (как позитивные, так и негативные) покупки тура.
 
+## Планирование
+
+[Тест-план](https://github.com/pava-14/qadplm/blob/master/Plan.md)
+
 ## Подготовка SUT
 
 - Для MySQL:
@@ -73,8 +77,6 @@
 ```clear-postgres-table.cmd```
 
 ## Отчетность
-
-[Тест-план](https://github.com/pava-14/qadplm/blob/master/Plan.md)
 
 [Отчёт по итогам тестирования](https://github.com/pava-14/qadplm/blob/master/Report.md)
 
