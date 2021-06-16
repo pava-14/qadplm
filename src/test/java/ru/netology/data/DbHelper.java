@@ -31,7 +31,7 @@ public class DbHelper {
             runner.execute(conn, truncatePaymentSQL, new ScalarHandler<>());
             runner.execute(conn, truncateCreditSQL, new ScalarHandler<>());
         } catch (SQLException e) {
-            //do nothing
+            e.printStackTrace();
         }
     }
 
@@ -42,7 +42,7 @@ public class DbHelper {
         try (val conn = DriverManager.getConnection(url, user, password)) {
             status = runner.query(conn, statusSQL, new ScalarHandler<>(), amount);
         } catch (SQLException e) {
-            // do nothing
+            e.printStackTrace();
         }
         return status;
     }
